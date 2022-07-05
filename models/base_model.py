@@ -7,13 +7,13 @@ import uuid
 from sqlalchemy import Column, String
 
 class BaseModel:
-    """"""
+    """class Base Model"""
     id = Column(String(50), unique = True, Nullable = False, primary_key = True)
     created_at = Column(datetime, nullable = False, default=datetime.utcnow())
     updated_at = Column(datetime, nullable = False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs): 
-        """"""
+        """init class"""
         if id not in kwargs:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -29,15 +29,15 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now
 
     def __str__(self):
-        """"""
+        """print a string representation"""
         return (f"[<self.__name__>] (<self.id>) <self.__dict__>")
 
     def save(self):
-        """"""
+        """save function"""
         self.updated_at = datetime.now()
 
     def to_dict(self):
-        """"""
+        """print the dictionnary representation of the string"""
         my_dict = dict(self.__dict__)
         my_dict[__class__] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
